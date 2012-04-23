@@ -52,10 +52,15 @@ var compile = function (musexpr) {
 var melody_mus = {
   tag: 'seq',
   left: {
-    tag: 'repeat', count: 3,
+    tag: 'repeat', count: 2,
     section: {
       tag: 'seq',
-      left: { tag: 'note', pitch: 'a4', dur: 250 },
+      left: {
+        tag: 'repeat', count: 2,
+        section: {
+          tag: 'note', pitch: 'a4', dur: 250
+        }
+      },
       right: { tag: 'note', pitch: 'b4', dur: 250 }
     }
   },
