@@ -1,0 +1,36 @@
+start =
+    expr:expression
+    { return expr; }
+
+validatomchar
+    = [0-9a-zA-Z_?!+\-=@#$%^&*/.]
+
+atom =
+    chars:validatomchar+
+        { return chars.join(""); }
+
+quotedexpression =
+    "'" expr:expression
+        { return ["quote", expr]; }
+
+expression =
+    atom
+  / quotedexpression
+  / expressionlist
+
+space =
+    [' '\t\r\n]+
+
+_ =
+    (space / comment)*
+
+expressionlist =
+    "(" _ first:expression rest:spacedexpression* ")" _
+        { return [first].concat(rest); }
+
+spacedexpression =
+    _ first:expression
+    { return first; }
+
+comment =
+    ";;" [^\n]*
